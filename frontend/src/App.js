@@ -1,11 +1,16 @@
-import React from 'react';
-import Navbar from "react-bootstrap/Navbar";
-import Nav from "react-bootstrap/Nav";
-import Routes from './Routes';
-import { LinkContainer } from "react-router-bootstrap";
+import logo from './logo.svg';
 import './App.css';
+import {useEffect} from "react"
+import axios from 'axios';
 
 function App() {
+  const createAccount = () => {
+    axios.post("http://localhost:9000/account/create", {
+      username: "testUser", 
+      email: "aaaa@virginia.edu", 
+      password: "testPassword"
+    })
+  }
   return (
     <div>
       <Navbar collapseOnSelect expand="md" className="color-nav">

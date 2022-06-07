@@ -5,10 +5,9 @@ const db = require("../firebase")
 const {getDocs, getDoc, collection, doc} = require("firebase/firestore")
 
 
-/* GET users listing. */
 router.get('/info', async (req, res, next) => {
   const allData = []; 
-  const docs = await getDocs(collection(db, "users"))
+  const docs = await getDocs(collection(db, "products"))
   docs.forEach((doc) => {
     let newVar = doc.data(); 
     newVar.id = doc.id; 
@@ -18,8 +17,7 @@ router.get('/info', async (req, res, next) => {
 });
 
 router.get("/info/:id", async (req,res,next) => {
-  console.log(req.params)
-  getDoc(doc(db, "users", req.params.id))
+  getDoc(doc(db, "products", req.params.id))
   .then((doc) => {res.send(doc.data())})
 })
 
