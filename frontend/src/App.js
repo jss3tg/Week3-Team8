@@ -20,31 +20,34 @@ function App() {
     fetch("http://localhost:9000/users/info").then((res) => res.json()).then((data) => console.log(data.result))
   }, [])
   return (
-    <div>
-      <Navbar collapseOnSelect expand="md" className="color-nav">
-        <LinkContainer to="/">
-          <Navbar.Brand className="logo-nav">
-            <img
-            alt=""
-            src="/uvalogo-removebg-preview.png"
-            width="70"
-            height="40"
-            />{' '}
-          Hoos Selling
-          </Navbar.Brand>
-        </LinkContainer>
-        <Navbar.Toggle />
-        <Navbar.Collapse className="redirect-nav">
-          <Nav activeKey={window.location.pathname}>
-            <LinkContainer to="/sellDash">
-              <Nav.Link>Seller Dashboard</Nav.Link>
-            </LinkContainer>
-            <LinkContainer to="/cart">
-              <Nav.Link>Cart</Nav.Link>
-            </LinkContainer>
-          </Nav>
-        </Navbar.Collapse>
-      </Navbar>
+  <div>
+    <Navbar collapseOnSelect expand="md" className="color-nav">
+      <LinkContainer to="/">
+        <Navbar.Brand className="logo-nav">
+          <img
+          alt=""
+          src="/uvalogo-removebg-preview.png"
+          width="70"
+          height="40"
+          />{' '}
+        Hoos Selling
+        </Navbar.Brand>
+      </LinkContainer>
+      <Navbar.Toggle />
+      <Navbar.Collapse className="redirect-nav">
+        <Nav activeKey={window.location.pathname}>
+          <LinkContainer to="/sellDash">
+            <Nav.Link>Seller Dashboard</Nav.Link>
+          </LinkContainer>
+          <LinkContainer to="/cart">
+            <Nav.Link>Cart</Nav.Link>
+          </LinkContainer>
+          <LinkContainer to="/stripe">
+            <Nav.Link>Stripe</Nav.Link>
+          </LinkContainer>
+        </Nav>
+      </Navbar.Collapse>
+    </Navbar>
       <Routes />
     </div>
   );
