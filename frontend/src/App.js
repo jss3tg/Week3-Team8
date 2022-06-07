@@ -17,7 +17,8 @@ function App() {
     })
   }
   useEffect(() => {
-    fetch("http://localhost:9000/users/info").then((res) => res.json()).then((data) => console.log(data.result))
+      const id = "xMMp2PiAYBgm5tfBdwaN"; 
+      axios.put("http://localhost:9000/users/removeProduct/1N6RpMnEHp2hZf35YVdE/"+id).then((res) => console.log(res.data))
   }, [])
   return (
     <div>
