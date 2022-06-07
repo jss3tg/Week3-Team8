@@ -1,0 +1,10 @@
+.seller-card{
+    grid-auto-flow:50 px;
+    width:18rem;
+}
+.container {
+    padding-top:40px;
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
+}
