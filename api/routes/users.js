@@ -2,7 +2,7 @@ const express = require("express")
 const router = express.Router()
 const app = require("../firebase")
 
-const {getDocs, getDoc, collection, doc, getFirestore} = require("firebase/firestore")
+const {getDocs, getDoc, collection, doc, getFirestore, updateDoc} = require("firebase/firestore")
 
 const db = getFirestore(app);
 
@@ -30,8 +30,8 @@ router.put("/addProduct/:userID/:productID", async (req, res, next) => {
   console.log(req.params); 
   const newRef = doc(db, "users", req.params.userID);
   getDoc(newRef)
-    .then((doc) =>{
-        let curProducts = doc.data().productsSelling; 
+    .then((result) =>{
+        let curProducts = result.data().productsSelling; 
         if(!curProducts) {
           curProducts = [];
         }
