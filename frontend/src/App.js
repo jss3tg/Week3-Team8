@@ -21,7 +21,7 @@ function App() {
   }, [])
   return (
     <div>
-      {/* <Navbar collapseOnSelect expand="md" className="color-nav">
+      <Navbar collapseOnSelect expand="md" className="color-nav">
         <LinkContainer to="/">
           <Navbar.Brand className="logo-nav">
             <img
@@ -45,7 +45,7 @@ function App() {
           </Nav>
         </Navbar.Collapse>
       </Navbar>
-      <Routes /> */}
+      <Routes />
     </div>
   );
 }
