@@ -12,14 +12,16 @@ const auth = getAuth(app);
 router.post('/create', async (req, res, next) => {
   console.log(req.body); 
     try{
-        await createUserWithEmailAndPassword(auth, req.body.email, req.body.password)
-        console.log("account created"); 
-        const docRef = doc(collection(db, "users")); 
-        setDoc(docRef, {
-            computingId: req.body.email.split("@")[0], 
-            productsSelling: [],
-            username: req.body.username,
+        createUserWithEmailAndPassword(auth, req.body.email, req.body.password).then((f) => {
+            console.log("account created"); 
+            const docRef = doc(collection(db, "users")); 
+            setDoc(docRef, {
+                computingId: req.body.email.split("@")[0], 
+                productsSelling: [],
+                username: req.body.username,
+            }).then(res.send("user created"))
         })
+        
     }catch(error){console.log(error.message)}
 });
 

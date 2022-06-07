@@ -20,7 +20,7 @@ const Login = () => {
             email: email,
             password: pass,
             username: username
-        }).then(() => setStatusText("Signed up! You may now log in."))
+        }).then((res) => {console.log("fds"); setStatusText("Signed up! You may now log in."); setSignupEmail(""); setSignupPassword(""); setUsername(""); login(compID, pass)}); 
     }
     return(
         <div className='login-signup-form'>
