@@ -2,6 +2,11 @@ import logo from './logo.svg';
 import './App.css';
 import {useEffect} from "react"
 import axios from 'axios';
+import Navbar from "react-bootstrap/Navbar";
+import Nav from "react-bootstrap/Nav";
+import Routes from './Routes';
+import { LinkContainer } from "react-router-bootstrap";
+import React from "react"
 
 function App() {
   const createAccount = () => {
@@ -11,9 +16,12 @@ function App() {
       password: "testPassword"
     })
   }
+  useEffect(() => {
+    fetch("http://localhost:9000/users/info").then((res) => res.json()).then((data) => console.log(data.result))
+  }, [])
   return (
     <div>
-      <Navbar collapseOnSelect expand="md" className="color-nav">
+      {/* <Navbar collapseOnSelect expand="md" className="color-nav">
         <LinkContainer to="/">
           <Navbar.Brand className="logo-nav">
             <img
@@ -37,7 +45,7 @@ function App() {
           </Nav>
         </Navbar.Collapse>
       </Navbar>
-      <Routes />
+      <Routes /> */}
     </div>
   );
 }
