@@ -1,6 +1,7 @@
 import React from "react";
 import { CardElement, useStripe, useElements } from "@stripe/react-stripe-js";
 import axios from "axios";
+import './CheckoutForm.css'
 
 export const CheckoutForm = () => {
   const stripe = useStripe();
@@ -37,9 +38,15 @@ export const CheckoutForm = () => {
       }
     };
   return (
-    <form onSubmit={handleSubmit} style={{ maxWidth: 400 }}>
-      <CardElement />
-      <button>Pay</button>
-    </form>
+    <><div>
+          <h1 className='checkoutHeader'>Checkout</h1>
+      </div>
+      <form onSubmit={handleSubmit} style={{ maxWidth: 400 }}>
+              <CardElement />
+              <div className = 'payment'>
+              <button type="button" class="btn btn-dark">Pay</button>
+              </div>
+          </form>
+          </>
   );
 };
