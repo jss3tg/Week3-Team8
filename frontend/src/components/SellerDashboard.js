@@ -14,7 +14,7 @@ function SellerDashboard() {
       name: e.target.product.value,
       description: e.target.description.value,
       condition: e.target.condition.value,
-      price: e.target.price.value,
+      price: e.target.price.valueAsNumber,
       numberAvailable: e.target.numberAvailable.value,
       pickupLocation: e.target.pickupLocation.value,
       negotiable: false,
