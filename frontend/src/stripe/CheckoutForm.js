@@ -110,7 +110,7 @@ export const CheckoutForm = () => {
           })}
             </div>
     <div className = 'pricecheckout'>
-            <h4>Total: ${totalPrice}</h4>
+            <h4>Total: ${parseFloat(totalPrice).toFixed(2)}</h4>
     </div>
     <form onSubmit={handleSubmit} style={{ maxWidth: 400 }}>
       <div className = "cardContainer">
@@ -133,8 +133,7 @@ export const CheckoutForm = () => {
           })}
         <div className = 'checkoutcontainer'>
           <div className = 'price'>
-            <h4>Total:</h4>
-            <h5>${totalPrice}</h5>
+            <h4>Total: ${parseFloat(totalPrice).toFixed(2)}</h4>
           </div>
           <div className='checkoutbutton'>
               <button type="button" onClick={() => setCheckout(!checkout)} class="btn btn-dark">
