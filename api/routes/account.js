@@ -31,6 +31,7 @@ router.post('/create', async (req, res, next) => {
                     computingId: req.body.email.split("@")[0], 
                     productsSelling: [],
                     username: req.body.username,
+                    cart: []
                 }).then(res.send("Account Created! You may now log in."))
             }
             catch(e) {
