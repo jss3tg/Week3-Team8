@@ -1,4 +1,3 @@
-import logo from './logo.svg';
 import './App.css';
 import {useEffect} from "react"
 import axios from 'axios';
@@ -39,11 +38,8 @@ function App() {
           <LinkContainer to="/sellDash">
             <Nav.Link>Seller Dashboard</Nav.Link>
           </LinkContainer>
-          <LinkContainer to="/cart">
-            <Nav.Link>Cart</Nav.Link>
-          </LinkContainer>
           <LinkContainer to="/stripe">
-            <Nav.Link>Stripe</Nav.Link>
+            <Nav.Link>Cart</Nav.Link>
           </LinkContainer>
         </Nav>
       </Navbar.Collapse>

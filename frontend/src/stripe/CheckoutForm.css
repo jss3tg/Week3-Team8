@@ -3,9 +3,68 @@
     text-align: center;
     align-items: center;
     justify-content: center;
+    color: #232D4B;
+    padding-top: 20px;
 }
 .payment{
     display: flex;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+}
+.product, .desciption, .checkoutbutton{
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+}
+
+.checkoutPage{
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+
+}
+
+.price{
+    display: flex;
+    font-size: larger;
+
+}
+
+.order{
+    display: flex;
+    flex-direction: row;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+}
+.checkoutcontainer{
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    width: 200px;
+    height: 200px;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    top:0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    
+    margin: auto;
+}
+
+.cardContainer{
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    padding-left: 100px;
+}
+.pricecheckout{
+    display: flex;
+    font-size: larger;
     text-align: center;
     align-items: center;
     justify-content: center;
