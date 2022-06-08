@@ -68,7 +68,7 @@ const Login = () => {
                 width="70"
                 height="40"
                 />{' '}
-                Hoos Selling
+                HOOS SELLING
             </div>
             </div>
             

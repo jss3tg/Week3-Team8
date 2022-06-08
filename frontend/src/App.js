@@ -1,4 +1,3 @@
-
 import './App.css';
 import {useEffect} from "react"
 import axios from 'axios';
@@ -14,18 +13,26 @@ function App() {
   useEffect(() => {
       // login(); 
   }, [])
-  return (
-    <UserIDProvider>
-      <Navbar collapseOnSelect expand="md" className="color-nav">
-        <LinkContainer to="/">
-          <Navbar.Brand className="logo-nav">
-            <img
+  const FontLink = () => {
+    return(
+      <div className = 'header1'>
+        <img
             alt=""
             src="/uvalogo-removebg-preview.png"
             width="70"
             height="40"
             />{' '}
-          Hoos Selling
+            <span className="font-link">HOOS SELLING</span>
+            </div>
+    )
+    }
+  return (
+    <span className="font-link">
+    <UserIDProvider>
+      <Navbar collapseOnSelect expand="md" className="color-nav">
+        <LinkContainer to="/">
+          <Navbar.Brand className="logo-nav">
+          <FontLink />
           </Navbar.Brand>
         </LinkContainer>
         <Navbar.Toggle />
@@ -34,7 +41,7 @@ function App() {
             <LinkContainer to="/sellDash">
               <Nav.Link>Seller Dashboard</Nav.Link>
             </LinkContainer>
-            <LinkContainer to="/cart">
+            <LinkContainer to="/stripe">
               <Nav.Link>Cart</Nav.Link>
             </LinkContainer>
           </Nav>
@@ -43,6 +50,7 @@ function App() {
       <Routes />
       <Login />
     </UserIDProvider>
+    </span>
   );
 }
 
