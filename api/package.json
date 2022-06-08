@@ -16,5 +16,6 @@
     "jade": "~1.11.0",
     "morgan": "~1.9.1",
     "stripe": "^9.6.0"
-  }
+  },
+  "proxy": "http://localhost:9000"
 }

@@ -6,46 +6,42 @@ import Nav from "react-bootstrap/Nav";
 import Routes from './Routes';
 import { LinkContainer } from "react-router-bootstrap";
 import React from "react"
+import Login from "./components/Login.js"
+import UserIDProvider from './UserIDContext';
 
 function App() {
-  const createAccount = () => {
-    axios.post("http://localhost:9000/account/create", {
-      username: "testUser", 
-      email: "aaaa@virginia.edu", 
-      password: "testPassword"
-    })
-  }
   useEffect(() => {
-    fetch("http://localhost:9000/users/info").then((res) => res.json()).then((data) => console.log(data.result))
+      // login(); 
   }, [])
   return (
-  <div>
-    <Navbar collapseOnSelect expand="md" className="color-nav">
-      <LinkContainer to="/">
-        <Navbar.Brand className="logo-nav">
-          <img
-          alt=""
-          src="/uvalogo-removebg-preview.png"
-          width="70"
-          height="40"
-          />{' '}
-        Hoos Selling
-        </Navbar.Brand>
-      </LinkContainer>
-      <Navbar.Toggle />
-      <Navbar.Collapse className="redirect-nav">
-        <Nav activeKey={window.location.pathname}>
-          <LinkContainer to="/sellDash">
-            <Nav.Link>Seller Dashboard</Nav.Link>
-          </LinkContainer>
-          <LinkContainer to="/stripe">
-            <Nav.Link>Cart</Nav.Link>
-          </LinkContainer>
-        </Nav>
-      </Navbar.Collapse>
-    </Navbar>
+    <UserIDProvider>
+      <Navbar collapseOnSelect expand="md" className="color-nav">
+        <LinkContainer to="/">
+          <Navbar.Brand className="logo-nav">
+            <img
+            alt=""
+            src="/uvalogo-removebg-preview.png"
+            width="70"
+            height="40"
+            />{' '}
+          Hoos Selling
+          </Navbar.Brand>
+        </LinkContainer>
+        <Navbar.Toggle />
+        <Navbar.Collapse className="redirect-nav">
+          <Nav activeKey={window.location.pathname}>
+            <LinkContainer to="/sellDash">
+              <Nav.Link>Seller Dashboard</Nav.Link>
+            </LinkContainer>
+            <LinkContainer to="/stripe">
+              <Nav.Link>Cart</Nav.Link>
+            </LinkContainer>
+          </Nav>
+        </Navbar.Collapse>
+      </Navbar>
       <Routes />
-    </div>
+      <Login />
+    </UserIDProvider>
   );
 }
 
