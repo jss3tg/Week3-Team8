@@ -1,0 +1,34 @@
+h1 {
+    text-align: center;
+    color: #232D4B; 
+}
+.login-signup-form {
+    text-align: center;
+}
+
+.login-signup-form button {
+    background: transparent;
+    padding: 11px 50px;
+    border-style: #232D4B;
+    text-align: center;
+    margin: 5px; 
+    font-size: 20px;
+    border: 1px solid #232D4B;
+    border-radius: 20px;
+    width: 350px;
+    height: 56px;
+    cursor: pointer;
+    color: #232D4B; 
+  }
+
+.login-signup-form input {
+    width: 350px;
+    padding: 5px;
+    height: 56px;
+    margin: 5px;
+    border-radius: 20px;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+    font-size: 16px;
+    padding-left: 25px;
+}
