@@ -1,4 +1,4 @@
-import logo from './logo.svg';
+
 import './App.css';
 import {useEffect} from "react"
 import axios from 'axios';
@@ -16,7 +16,7 @@ function App() {
   }, [])
   return (
     <UserIDProvider>
-      {/* <Navbar collapseOnSelect expand="md" className="color-nav">
+      <Navbar collapseOnSelect expand="md" className="color-nav">
         <LinkContainer to="/">
           <Navbar.Brand className="logo-nav">
             <img
@@ -40,7 +40,7 @@ function App() {
           </Nav>
         </Navbar.Collapse>
       </Navbar>
-      <Routes /> */}
+      <Routes />
       <Login />
     </UserIDProvider>
   );
