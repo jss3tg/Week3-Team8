@@ -25,7 +25,6 @@ router.get("/info/:id", async (req,res,next) => {
   .then((doc) => {res.send(doc.data())})
 })
 
-//untested
 router.put("/addProduct/:userID/:productID", async (req, res, next) => {
   console.log(req.params); 
   const newRef = doc(db, "users", req.params.userID);

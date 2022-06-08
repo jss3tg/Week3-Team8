@@ -7,22 +7,16 @@ import Nav from "react-bootstrap/Nav";
 import Routes from './Routes';
 import { LinkContainer } from "react-router-bootstrap";
 import React from "react"
+import Login from "./components/Login.js"
+import UserIDProvider from './UserIDContext';
 
 function App() {
-  const createAccount = () => {
-    axios.post("http://localhost:9000/account/create", {
-      username: "testUser", 
-      email: "aaaa@virginia.edu", 
-      password: "testPassword"
-    })
-  }
   useEffect(() => {
-      const id = "xMMp2PiAYBgm5tfBdwaN"; 
-      axios.put("http://localhost:9000/users/removeProduct/1N6RpMnEHp2hZf35YVdE/"+id).then((res) => console.log(res.data))
+      // login(); 
   }, [])
   return (
-    <div>
-      <Navbar collapseOnSelect expand="md" className="color-nav">
+    <UserIDProvider>
+      {/* <Navbar collapseOnSelect expand="md" className="color-nav">
         <LinkContainer to="/">
           <Navbar.Brand className="logo-nav">
             <img
@@ -46,8 +40,9 @@ function App() {
           </Nav>
         </Navbar.Collapse>
       </Navbar>
-      <Routes />
-    </div>
+      <Routes /> */}
+      <Login />
+    </UserIDProvider>
   );
 }
 
