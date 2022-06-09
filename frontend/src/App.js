@@ -41,7 +41,7 @@ function App() {
             <LinkContainer to="/sellDash">
               <Nav.Link>Seller Dashboard</Nav.Link>
             </LinkContainer>
-            <LinkContainer to="/stripe">
+            <LinkContainer to="/cart">
               <Nav.Link>Cart</Nav.Link>
             </LinkContainer>
           </Nav>

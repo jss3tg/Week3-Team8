@@ -7,36 +7,63 @@ import './CheckoutForm.css';
 
 
 export const CheckoutForm = () => {
-
+  const [cart, setCart] = useState(null);
   const [products, setProducts] = useState([]);
   const [checkout, setCheckout] = useState(false);
   const [totalCartPrice, setTotalCartPrice] = useState(0);
-  const [message, setMessage] = useState(false)
+  const [message, setMessage] = useState(false);
+  const [render, setRender] = useState(false);
   let totalPrice = 0;
-
-  useEffect(() => {
-    fetch("http://localhost:9000/products/info")
-    .then((res) => res.json())
-    .then((data) => setProducts(data.result))
-  }, [])
 
   const stripe = useStripe();
   const elements = useElements();
 
+  useEffect(() => {
+    fetch("http://localhost:9000/cart/ylM1X1JG3fLvEfKFH2dW")
+    .then((res) => res.json())
+    .then((data) => setCart(data.result))
+  }, [])
 
+
+  useEffect(() => {
+    if (cart){
+    let products=[];
+    cart.forEach((item) => {
+    fetch("http://localhost:9000/products/info/" + item.id)
+    .then((res) => res.json())
+    .then((data) =>
+    {console.log(data)
+      data.quantity = item.quantity
+    products.push({...data})}
+    )
+  })
+    setProducts(products)
+    console.log(products)
+  }
+  else {
+    fetch("http://localhost:9000/cart/ylM1X1JG3fLvEfKFH2dW")
+    .then((res) => res.json())
+    .then((data) => setCart(data.result))
+  }
+  }, [])
+
+  function showAlert() {
+    alert ("Are you ready to complete your purchase?");
+  }
   const ProductDisplay = (props) => (
     <section>
       <div className = 'checkoutPage'>
         <div className="product">
-          <img
+          {/* <img
             src="https://i.imgur.com/EHyR2nP.png"
             alt="The cover of Stubborn Attachments"
             height="200px"
   
-          />
+          /> */}
           <div className="description">
           <h4>{props.name}</h4>
           <h6>${props.price}</h6>
+          <h6>quantity: {props.quantity}</h6>
           </div>
         </div>
       </div>
@@ -47,7 +74,7 @@ export const CheckoutForm = () => {
   const CheckoutDisplay = (props) => (
     <section>
       <div className = 'checkoutdisplaypage'>
-          <h6>{props.name} ${props.price}</h6>
+          <h6>{props.name} ${props.price} quantity: {props.quantity}</h6>
       </div>
     </section>
     
@@ -57,26 +84,7 @@ export const CheckoutForm = () => {
     event.preventDefault();
     const { error, paymentMethod } = await stripe.createPaymentMethod({
       type: "card",
-      card: elements.getElement(CardElement, {style: {
-        base: {
-          iconColor: '#c4f0ff',
-          color: '#fff',
-          fontWeight: '500',
-          fontFamily: 'Roboto, Open Sans, Segoe UI, sans-serif',
-          fontSize: '16px',
-          fontSmoothing: 'antialiased',
-          ':-webkit-autofill': {
-            color: '#fce883',
-          },
-          '::placeholder': {
-            color: '#87BBFD',
-          },
-        },
-        invalid: {
-          iconColor: '#FFC7EE',
-          color: '#FFC7EE',
-        },
-      },}),
+      card: elements.getElement(CardElement),
     });
 
     if (!error) {
@@ -120,17 +128,17 @@ export const CheckoutForm = () => {
             <div className = 'cardElement'>
             <CardElement /></div>
           <div className = 'paybutton'>
-            <Button type='submit' class="btn btn-dark">Complete Purchase</Button>
+            <Button type='submit' class="btn btn-dark" onClick = {() => showAlert()}>Complete Purchase</Button>
           </div>
         </form>
         </div>
     <div className="checkoutpage">
       <div className = 'orderCheckout'>
         <h3 className="orangeOrder">Your Order</h3>
-            {products.length > 0 &&
+        {products.length > 0 &&
               products.map((val, key) => {
-                totalPrice += val.price
-                return <p><CheckoutDisplay name={val.name} price={val.price} /></p>
+                totalPrice += val.price * val.quantity
+                return <p><CheckoutDisplay name={val.name} price={val.price} quantity={val.quantity}/></p>
               })}
       </div>
       <h4 className = 'pricecheckout'>Total: ${parseFloat(totalPrice).toFixed(2)}</h4>
@@ -147,11 +155,11 @@ export const CheckoutForm = () => {
           : <h1>Cart</h1>}</div>
         <div className = 'order'>
         {products.length > 0 &&
-          products.map((val, key) => {
-            totalPrice += val.price
-            return <ProductDisplay name={val.name} price={val.price} />;
-          })}
-          {products.length===0 && <p>Cart is Empty</p>}
+              products.map((val, key) => {
+                totalPrice += val.price * val.quantity
+                return <CheckoutDisplay name={val.name} price={val.price}quantity={val.quantity}/>
+              })}
+          {products.length===0 && <h3 className="cartIsEmpty">Cart is empty</h3>}
         <div className = 'checkoutcontainer'>
           <div className = 'price'>
             <h4>Total: ${parseFloat(totalPrice).toFixed(2)}</h4>

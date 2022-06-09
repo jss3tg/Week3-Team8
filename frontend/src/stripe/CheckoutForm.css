@@ -47,7 +47,9 @@
     text-align: center;
     align-items: center;
     justify-content: center;
+    flex-wrap: wrap;
 }
+
 .checkoutcontainer{
     display: flex;
     flex-direction: column;
@@ -106,4 +108,9 @@
     text-align: right;
     align-items: right;
     justify-content: right;
+}
+
+.cartIsEmpty{
+    color: orange;
+    padding-left: 300px;
 }
