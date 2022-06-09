@@ -44,6 +44,15 @@ export const CheckoutForm = () => {
     
   );
 
+  const CheckoutDisplay = (props) => (
+    <section>
+      <div className = 'checkoutdisplaypage'>
+          <h6>{props.name} ${props.price}</h6>
+      </div>
+    </section>
+    
+  );
+
   const handleSubmit = async (event) => {
     event.preventDefault();
     const { error, paymentMethod } = await stripe.createPaymentMethod({
@@ -102,35 +111,47 @@ export const CheckoutForm = () => {
     <div className="checkoutHeader">
       <h1>CHECKOUT</h1>
     </div>
-    <div className = 'order'>
-    {products.length > 0 &&
-          products.map((val, key) => {
-            totalPrice += val.price
-            return <ProductDisplay name={val.name} price={val.price} />
-          })}
-            </div>
-    <div className = 'pricecheckout'>
-            <h4>Total: ${parseFloat(totalPrice).toFixed(2)}</h4>
-    </div>
-    <form onSubmit={handleSubmit} style={{ maxWidth: 400 }}>
+
+
+    <div className = "pagecontainer">
       <div className = "cardContainer">
-      <CardElement /><Button type='submit' class="btn btn-dark">Pay</Button>
+        <form onSubmit={handleSubmit} style={{ maxWidth: 400 }}>
+            <h3 className="orange">Pay With Credit or Debit</h3>
+            <div className = 'cardElement'>
+            <CardElement /></div>
+          <div className = 'paybutton'>
+            <Button type='submit' class="btn btn-dark">Complete Purchase</Button>
+          </div>
+        </form>
+        </div>
+    <div className="checkoutpage">
+      <div className = 'orderCheckout'>
+        <h3 className="orangeOrder">Your Order</h3>
+            {products.length > 0 &&
+              products.map((val, key) => {
+                totalPrice += val.price
+                return <p><CheckoutDisplay name={val.name} price={val.price} /></p>
+              })}
       </div>
-    </form>
+      <h4 className = 'pricecheckout'>Total: ${parseFloat(totalPrice).toFixed(2)}</h4>
+    </div>
+    </div>
 </>
     
   )
   :
   (
         <><div>
+          <div className="checkoutHeader">
           {message ? <p>Success! Your order is now being processed. Thank you for shopping with Hoos Selling.</p>
-          : ""}
+          : <h1>Cart</h1>}</div>
         <div className = 'order'>
         {products.length > 0 &&
           products.map((val, key) => {
             totalPrice += val.price
             return <ProductDisplay name={val.name} price={val.price} />;
           })}
+          {products.length===0 && <p>Cart is Empty</p>}
         <div className = 'checkoutcontainer'>
           <div className = 'price'>
             <h4>Total: ${parseFloat(totalPrice).toFixed(2)}</h4>
