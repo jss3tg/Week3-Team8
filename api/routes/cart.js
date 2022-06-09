@@ -11,7 +11,7 @@ const db = getFirestore(app);
 //THIS IS UNTESTED
 router.get('/:userID', async (req, res, next) => {
         console.log(req.params)
-        getDoc(doc(db, "users", req.params.id))
+        getDoc(doc(db, "users", req.params.userID))
         .then((doc) => {
             const cartArray = doc.data().cart; 
             let newArray = []; 
@@ -28,6 +28,7 @@ router.get('/:userID', async (req, res, next) => {
                         id: cartArray[x]._key.path.segments[6], 
                         quantity: 1
                     }
+                    newArray.push(newVar); 
                 }
                 
             }
