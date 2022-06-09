@@ -35,8 +35,8 @@ router.post("/stripe/charge", cors(), async (req, res) => {
   }
 });
 
-router.listen(process.env.PORT || 8080, () => {
-  console.log("Server started...");
-});
+// router.listen(process.env.PORT || 8080, () => {
+//   console.log("Server started...");
+// });
 
 module.exports = router;
