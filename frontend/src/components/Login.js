@@ -27,8 +27,8 @@ const Login = () => {
                 alert("Your password is incorrect!"); 
             }
             else {
-                setStatusText("This user doesn't exist or there was another error. Please try signing in again or create an account.")
-                alert("This user doesn't exist or there was another error. Please try signing in again or create an account."); 
+                setStatusText("This user doesn't exist. Please try signing in again. Remember to enter your computing ID, not your email.")
+                alert("This user doesn't exist. Please try signing in again. Remember to enter your computing ID, not your email."); 
             }
         })
     }
