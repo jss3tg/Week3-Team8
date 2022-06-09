@@ -1,4 +1,3 @@
-
 import './App.css';
 import {useEffect} from "react"
 import axios from 'axios';
@@ -12,20 +11,28 @@ import UserIDProvider from './UserIDContext';
 
 function App() {
   useEffect(() => {
-      // login(); 
+      fetch("http://localhost:9000/cart/" + "ylM1X1JG3fLvEfKFH2dW").then((res) => res.json()).then((text) => console.log(text))
   }, [])
-  return (
-    <UserIDProvider>
-      <Navbar collapseOnSelect expand="md" className="color-nav">
-        <LinkContainer to="/">
-          <Navbar.Brand className="logo-nav">
-            <img
+  const FontLink = () => {
+    return(
+      <div className = 'header1'>
+        <img
             alt=""
             src="/uvalogo-removebg-preview.png"
             width="70"
             height="40"
             />{' '}
-          Hoos Selling
+            <span className="font-link">HOOS SELLING</span>
+            </div>
+    )
+    }
+  return (
+    <span className="font-link">
+    <UserIDProvider>
+      <Navbar collapseOnSelect expand="md" className="color-nav">
+        <LinkContainer to="/">
+          <Navbar.Brand className="logo-nav">
+          <FontLink />
           </Navbar.Brand>
         </LinkContainer>
         <Navbar.Toggle />
@@ -34,7 +41,7 @@ function App() {
             <LinkContainer to="/sellDash">
               <Nav.Link>Seller Dashboard</Nav.Link>
             </LinkContainer>
-            <LinkContainer to="/cart">
+            <LinkContainer to="/stripe">
               <Nav.Link>Cart</Nav.Link>
             </LinkContainer>
           </Nav>
@@ -43,6 +50,7 @@ function App() {
       <Routes />
       <Login />
     </UserIDProvider>
+    </span>
   );
 }
 
