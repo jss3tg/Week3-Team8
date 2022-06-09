@@ -54,7 +54,10 @@ router.put("/addToCart/:userID/:productID", async (req, res, next) => {
 
 router.put("/clearCart/:userID", async (req, res, next) => {
     console.log(req.params); 
-    
+    const newRef = doc(db, "users", req.params.userID);
+    updateDoc(newRef, {
+        cart: [],
+    }).then(res.send("success"))
 }) 
 
 module.exports = router;
