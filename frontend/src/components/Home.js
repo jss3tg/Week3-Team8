@@ -2,11 +2,21 @@ import React from "react";
 import "./Home.css";
 
 function Home() {
+  const FontLink = () => {
+    return(
+        <div className="card">
+            <span className="font-link">
+                HOOS SELLING
+            </span>
+        </div>
+    )
+  };
+  
   return (
     <div className="Home">
       <div className="lander">
-        <h1>Hoos Selling</h1>
-        <p className="text-muted">What do you want to sell</p>
+        <FontLink />
+        <p className="text-muted">What do you want to sell?</p>
       </div>
     </div>
   );
