@@ -8,7 +8,6 @@ const db = getFirestore(app);
 
 
 /* GET users cart. */
-//THIS IS UNTESTED
 router.get('/:userID', async (req, res, next) => {
         console.log(req.params)
         getDoc(doc(db, "users", req.params.userID))
@@ -39,17 +38,67 @@ router.get('/:userID', async (req, res, next) => {
 
 router.put("/addToCart/:userID/:productID", async (req, res, next) => {
   console.log(req.params); 
-  const newRef = doc(db, "users", req.params.userID, "cart");
+  const newRef = doc(db, "users", req.params.userID);
   const path = doc(db, "products/" + req.params.productID); 
-  setDoc(newRef, {
-    item: path, 
-    quantity: req.params.quantity
-}).then(res.send("success"))
+  getDoc(newRef).then((doc) => {
+      let newArray = [];
+      for(let x = 0; x < doc.data().cart.length; x++) {
+        newArray.push(doc.data().cart[x]);
+      }
+      newArray.push(path); 
+      updateDoc(newRef, {
+        cart: newArray,
+      }).then(res.send("success"))
+  })
 })
 
 router.put("/clearCart/:userID", async (req, res, next) => {
     console.log(req.params); 
-    
+    const newRef = doc(db, "users", req.params.userID);
+    updateDoc(newRef, {
+        cart: [],
+    }).then(res.send("success"))
 }) 
+
+router.put("/removeAllQuantityFromCart/:userID/:productID", async (req, res, next) => {
+    console.log(req.params); 
+    const newRef = doc(db, "users", req.params.userID);
+    getDoc(newRef).then((doc) => {
+        let newArray = [];
+        const cartArray = doc.data().cart; 
+        for(let x = 0; x < cartArray.length; x++) {
+            if(cartArray[x]._key.path.segments[6] != req.params.productID) {
+                newArray.push(cartArray[x])
+            }
+        }
+        updateDoc(newRef, {
+            cart: newArray,
+        }).then(res.send("success"))
+    })
+})
+
+router.put("/removeOneFromCart/:userID/:productID", async (req, res, next) => {
+    console.log(req.params); 
+    const newRef = doc(db, "users", req.params.userID);
+    getDoc(newRef).then((doc) => {
+        let newArray = [];
+        const cartArray = doc.data().cart; 
+        let found = false; 
+        for(let x = 0; x < cartArray.length; x++) {
+            if(found || cartArray[x]._key.path.segments[6] != req.params.productID) {
+                newArray.push(cartArray[x]);
+            }
+            else if (cartArray[x]._key.path.segments[6] == req.params.productID) {
+                found = true; 
+            }
+        }
+        if(!found) {
+            res.send("item not found!")
+        }
+        updateDoc(newRef, {
+            cart: newArray,
+        }).then(res.send("success"))
+    })
+})
 
 module.exports = router;
