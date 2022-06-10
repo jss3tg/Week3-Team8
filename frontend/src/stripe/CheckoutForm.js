@@ -6,20 +6,16 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import './CheckoutForm.css';
 import {UserIDContext} from "../UserIDContext";
 
-
 export const CheckoutForm = () => {
   const [cart, setCart] = useState(null);
   const [productsInfo, setProducts] = useState(null);
   const [checkout, setCheckout] = useState(false);
   const [message, setMessage] = useState(false);
   const {curUserID, setCurUserID} = useContext(UserIDContext); 
-
   let totalPrice = 0;
-
   const stripe = useStripe();
   const elements = useElements();
 
-  
   useEffect(() => {
     if(!productsInfo) {
       getProductInfo(); 
@@ -62,15 +58,14 @@ export const CheckoutForm = () => {
         <div className="product">
           <img
             src={props.image}
-            alt="The cover of Stubborn Attachments"
+            alt="listing image"
             height="200px"
             width="200px"
-  
           />
           <div className="description">
-          <h4>{props.name}</h4>
-          <h6>${props.price}</h6>
-          <h6>quantity: {props.quantity}</h6>
+            <h4>{props.name}</h4>
+            <h6>${props.price}</h6>
+            <h6>quantity: {props.quantity}</h6>
           </div>
         </div>
       </div>
