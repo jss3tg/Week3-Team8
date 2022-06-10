@@ -9,7 +9,7 @@ export default function Links() {
     <Routes>
       <Route path="/" element={<Home />} />
       <Route path="sellDash" element={<SellerDashboard />} />
-      <Route path="stripe" element={<StripeContainer />} />
+      <Route path="cart" element={<StripeContainer />} />
     </Routes>
   );
 }
