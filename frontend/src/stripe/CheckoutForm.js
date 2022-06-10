@@ -1,18 +1,19 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { CardElement, useStripe, useElements } from "@stripe/react-stripe-js";
 import axios from "axios";
 import Button from 'react-bootstrap/Button';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './CheckoutForm.css';
+import {UserIDContext} from "../UserIDContext";
 
 
 export const CheckoutForm = () => {
   const [cart, setCart] = useState(null);
   const [productsInfo, setProducts] = useState(null);
   const [checkout, setCheckout] = useState(false);
-  const [totalCartPrice, setTotalCartPrice] = useState(0);
   const [message, setMessage] = useState(false);
-  const [render, setRender] = useState(false);
+  const {curUserID, setCurUserID} = useContext(UserIDContext); 
+
   let totalPrice = 0;
 
   const stripe = useStripe();
@@ -42,26 +43,30 @@ export const CheckoutForm = () => {
     }
     else {
       console.log("no cart")
-      fetch("http://localhost:9000/cart/ylM1X1JG3fLvEfKFH2dW")
+      fetch("http://localhost:9000/cart/"+ curUserID)
       .then((res) => res.json())
       .then((data) => {setCart(data.result); console.log("data set'")})
     }
   }
 
-  function showAlert() {
-    alert ("Are you ready to complete your purchase?");
+  function showConfirm() {
+    if (window.confirm("Check over your order before moving to the payment window. Once you hit pay, the order will process.") == true) {
+      setCheckout(!checkout)
+    }   else {
+    }
   }
 
   const ProductDisplay = (props) => (
     <section>
       <div className = 'checkoutPage'>
         <div className="product">
-          {/* <img
-            src="https://i.imgur.com/EHyR2nP.png"
+          <img
+            src={props.image}
             alt="The cover of Stubborn Attachments"
             height="200px"
+            width="200px"
   
-          /> */}
+          />
           <div className="description">
           <h4>{props.name}</h4>
           <h6>${props.price}</h6>
@@ -106,6 +111,7 @@ export const CheckoutForm = () => {
         if (response.data.success) {
           console.log("CheckoutForm.js 25 | payment successful!");
           setCheckout(!checkout);
+          axios.put("http://localhost:9000/cart/clearCart/" + curUserID)
           setMessage(true);
         }
       } catch (error) {
@@ -126,12 +132,12 @@ export const CheckoutForm = () => {
 
     <div className = "pagecontainer">
       <div className = "cardContainer">
-        <form onSubmit={handleSubmit} style={{ maxWidth: 400 }}>
+        <form onSubmit = {handleSubmit} style={{ maxWidth: 400 }}>
             <h3 className="orange">Pay With Credit or Debit</h3>
             <div className = 'cardElement'>
             <CardElement /></div>
           <div className = 'paybutton'>
-            <Button type='submit' class="btn btn-dark" onClick = {() => showAlert()}>Complete Purchase</Button>
+            <Button type='submit' class="btn btn-dark">Pay</Button>
           </div>
         </form>
         </div>
@@ -160,7 +166,7 @@ export const CheckoutForm = () => {
         {productsInfo.length > 0 &&
               productsInfo.map((val, key) => {
                 totalPrice += val.price * val.quantity
-                return <CheckoutDisplay name={val.name} price={val.price}quantity={val.quantity}/>
+                return <ProductDisplay name={val.name} price={val.price} quantity={val.quantity} image={val.image}/>
               })}
           {productsInfo.length===0 && <h3 className="cartIsEmpty">Cart is empty</h3>}
         <div className = 'checkoutcontainer'>
@@ -168,7 +174,7 @@ export const CheckoutForm = () => {
             <h4>Total: ${parseFloat(totalPrice).toFixed(2)}</h4>
           </div>
           <div className='checkoutbutton'>
-              <button type="button" onClick={() => setCheckout(!checkout)} class="btn btn-dark">
+              <button type="button" onClick={() => showConfirm()} class="btn btn-dark">
                 Checkout
               </button>
           </div>
