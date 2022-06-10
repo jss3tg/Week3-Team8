@@ -6,7 +6,7 @@ import "./Login.css";
 import { Navbar } from "react-bootstrap";
 
 
-const Login = () => {
+const Login = (props) => {
     const [loginEmail, setLoginEmail] = useState(""); 
     const [loginPassword, setLoginPassword] = useState(""); 
     const [signupEmail, setSignupEmail] = useState(""); 
@@ -20,7 +20,8 @@ const Login = () => {
         const email = compID + "@virginia.edu";
         fetch("http://localhost:9000/account/login/" + email + "/" + pass).then((res) => res.json()).then((text) => {
             if(text.id) {
-                setCurUserID(text.id); console.log(text.id)
+                setCurUserID(text.id); console.log(text.id); 
+                props.setLoginPage(text.id); 
             }
             else if (text.error == "Firebase: Error (auth/wrong-password).") {
                 setStatusText("Your password is incorrect!")
