@@ -1,18 +1,18 @@
 import Button from "react-bootstrap/Button";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import "./prod.css";
 import StripeContainer from "../stripe/StripeContainer";
-
+import axios from "axios";
+import {UserIDContext} from "../UserIDContext";
 const Prod = () => {
   const [products, setProducts] = useState([]);
-
+  const {curUserID} = useContext(UserIDContext);
   useEffect(() => {
     fetch("http://localhost:9000/products/info")
       .then((res) => res.json())
       .then((data) => setProducts(data.result));
   }, []);
   console.log({ products });
-
   const ProductDisplay = (props) => (
     <section>
       <div className="checkoutPage">
@@ -46,8 +46,6 @@ const Prod = () => {
       </div>
     </section>
   );
-
-
   return (
     <div>
     <h1 className = "title">All Products</h1>
@@ -65,8 +63,8 @@ const Prod = () => {
                   image={val.image}
                 />{" "}
                 <div className="button-display">
-                  <a class="button is-secondary" href="addcart" target="_blank">
-                    <Button variant="secondary">
+                  <a class="button is-secondary" href="cart" target="_blank">
+                    <Button variant="secondary" onClick ={ () => {axios.put("http://localhost:9000/cart/addToCart/" + curUserID + "/" + val.id)}} >
                       Add to Cart
                     </Button>
                   </a>
@@ -94,5 +92,4 @@ const Prod = () => {
     </div>
   );
 };
-
 export default Prod;
