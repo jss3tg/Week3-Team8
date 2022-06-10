@@ -8,7 +8,7 @@ import './CheckoutForm.css';
 
 export const CheckoutForm = () => {
   const [cart, setCart] = useState(null);
-  const [products, setProducts] = useState([]);
+  const [productsInfo, setProducts] = useState(null);
   const [checkout, setCheckout] = useState(false);
   const [totalCartPrice, setTotalCartPrice] = useState(0);
   const [message, setMessage] = useState(false);
@@ -18,38 +18,40 @@ export const CheckoutForm = () => {
   const stripe = useStripe();
   const elements = useElements();
 
+  
   useEffect(() => {
-    fetch("http://localhost:9000/cart/ylM1X1JG3fLvEfKFH2dW")
-    .then((res) => res.json())
-    .then((data) => setCart(data.result))
+    if(!productsInfo) {
+      getProductInfo(); 
+    }
   }, [])
 
-
-  useEffect(() => {
+  const getProductInfo = () => {
     if (cart){
-    let products=[];
-    cart.forEach((item) => {
-    fetch("http://localhost:9000/products/info/" + item.id)
-    .then((res) => res.json())
-    .then((data) =>
-    {console.log(data)
-      data.quantity = item.quantity
-    products.push({...data})}
-    )
-  })
-    setProducts(products)
-    console.log(products)
+      let products=[];
+      cart.forEach((item) => {
+      fetch("http://localhost:9000/products/info/" + item.id)
+      .then((res) => res.json())
+      .then((data) =>
+      {console.log(data)
+        data.quantity = item.quantity
+      products.push({...data})}
+      )
+    })
+      setProducts(products)
+      console.log(products)
+    }
+    else {
+      console.log("no cart")
+      fetch("http://localhost:9000/cart/ylM1X1JG3fLvEfKFH2dW")
+      .then((res) => res.json())
+      .then((data) => {setCart(data.result); console.log("data set'")})
+    }
   }
-  else {
-    fetch("http://localhost:9000/cart/ylM1X1JG3fLvEfKFH2dW")
-    .then((res) => res.json())
-    .then((data) => setCart(data.result))
-  }
-  }, [])
 
   function showAlert() {
     alert ("Are you ready to complete your purchase?");
   }
+
   const ProductDisplay = (props) => (
     <section>
       <div className = 'checkoutPage'>
@@ -113,7 +115,8 @@ export const CheckoutForm = () => {
       console.log(error.message);
     }
   };
-
+  if(productsInfo) {
+    console.log(productsInfo)
   return checkout ? (
     <>
     <div className="checkoutHeader">
@@ -135,8 +138,8 @@ export const CheckoutForm = () => {
     <div className="checkoutpage">
       <div className = 'orderCheckout'>
         <h3 className="orangeOrder">Your Order</h3>
-        {products.length > 0 &&
-              products.map((val, key) => {
+        {productsInfo.length > 0 &&
+              productsInfo.map((val, key) => {
                 totalPrice += val.price * val.quantity
                 return <p><CheckoutDisplay name={val.name} price={val.price} quantity={val.quantity}/></p>
               })}
@@ -154,12 +157,12 @@ export const CheckoutForm = () => {
           {message ? <p>Success! Your order is now being processed. Thank you for shopping with Hoos Selling.</p>
           : <h1>Cart</h1>}</div>
         <div className = 'order'>
-        {products.length > 0 &&
-              products.map((val, key) => {
+        {productsInfo.length > 0 &&
+              productsInfo.map((val, key) => {
                 totalPrice += val.price * val.quantity
                 return <CheckoutDisplay name={val.name} price={val.price}quantity={val.quantity}/>
               })}
-          {products.length===0 && <h3 className="cartIsEmpty">Cart is empty</h3>}
+          {productsInfo.length===0 && <h3 className="cartIsEmpty">Cart is empty</h3>}
         <div className = 'checkoutcontainer'>
           <div className = 'price'>
             <h4>Total: ${parseFloat(totalPrice).toFixed(2)}</h4>
@@ -172,5 +175,8 @@ export const CheckoutForm = () => {
           </div>
         </div>
         </div></>
-  )
+  )}
+  else {
+    getProductInfo(); 
+  }
 };
