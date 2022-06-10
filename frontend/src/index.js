@@ -4,15 +4,18 @@ import './index.css';
 import App from './App';
 import { BrowserRouter as Router } from "react-router-dom";
 import reportWebVitals from './reportWebVitals';
+import UserIDProvider from './UserIDContext';
 //import './bootstrap.min.css';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 try{
   root.render(
   <React.StrictMode>
+    <UserIDProvider>
     <Router>
     <App />
     </Router>
+    </UserIDProvider>
   </React.StrictMode>
 );
 }

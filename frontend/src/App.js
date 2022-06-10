@@ -5,11 +5,16 @@ import Navbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
 import Routes from './Routes';
 import { LinkContainer } from "react-router-bootstrap";
-import React from "react"
+import React, {useContext, useState} from "react"
 import Login from "./components/Login.js"
 import UserIDProvider from './UserIDContext';
+import { UserIDContext } from './UserIDContext';
 
 function App() {
+  const {curUserID, setCurUserID} = useContext(UserIDContext); 
+  const setLoginPage = (id) => {
+    setCurUserID(id); 
+  }
   const FontLink = () => {
     return(
       <div className = 'header1'>
@@ -23,6 +28,7 @@ function App() {
             </div>
     )
     }
+    if(curUserID && curUserID != "") {
   return (
     <span className="font-link">
     <UserIDProvider>
@@ -45,10 +51,19 @@ function App() {
         </Navbar.Collapse>
       </Navbar>
       <Routes />
-      <Login />
     </UserIDProvider>
     </span>
   );
+    }
+    else {
+      return(
+        <span className="font-link">
+    <UserIDProvider>
+      <Login setLoginPage={setLoginPage}/>
+    </UserIDProvider>
+    </span>
+      );
+    }
 }
 
 export default App;
