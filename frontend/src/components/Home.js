@@ -6,6 +6,10 @@ function Home() {
     return(
         <div className="card">
             <span className="font-link">
+              <img
+              src= "https://upload.wikimedia.org/wikipedia/en/d/d1/Virginia_Cavaliers_sabre.svg"
+              alt="uva logo"
+              />
                 HOOS SELLING
             </span>
         </div>
@@ -16,7 +20,8 @@ function Home() {
     <div className="Home">
       <div className="lander">
         <FontLink />
-        <p className="text-muted">What do you want to sell?</p>
+        <h5 className="text-muted">Buy and sell used appliances, furniture, and study tools!</h5>
+        <h6 className="more-text">Click on Products to view current items!</h6>
       </div>
     </div>
   );

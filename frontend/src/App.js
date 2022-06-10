@@ -41,6 +41,9 @@ function App() {
         <Navbar.Toggle />
         <Navbar.Collapse className="redirect-nav">
           <Nav activeKey={window.location.pathname}>
+          <LinkContainer to="/productpage">
+              <Nav.Link>Products</Nav.Link>
+            </LinkContainer>
             <LinkContainer to="/sellDash">
               <Nav.Link>Seller Dashboard</Nav.Link>
             </LinkContainer>
