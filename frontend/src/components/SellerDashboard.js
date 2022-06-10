@@ -9,24 +9,15 @@ function SellerDashboard() {
   const {curUserID} = useContext(UserIDContext);
   const [currUserData, setCurrUserData] = useState();
   const [currProductData, setCurrProductData] = useState();
-  useEffect(() => {
-    async function getUser() {
-      const response = await fetch("http://localhost:9000/users/" + curUserID);
-      const body = await response.json();
-      setCurrUserData(body);
-      console.log(body)
-    }
-    getUser();
-  }, []);
   console.log(currUserData)
   //console.log(currUserData.result[0]) //displays product IDs under user (when logged in)
 
-  //need to change this function to retrieve each product under currUserData
-  useEffect(() => {
+  const getData = () => {
     if (currUserData){
+      console.log("user data here")
       let products = [];
-      currUserData.forEach((item) => {
-        fetch("http://localhost:9000/products/info" + item.id)
+      currUserData.productsSelling.forEach((item) => {
+        fetch("http://localhost:9000/products/info/" + item._key.path.segments[6])
         .then((res) => res.json())
         .then((data) =>
         {products.push({...data})}
@@ -37,10 +28,14 @@ function SellerDashboard() {
     }
     
     else{
-      fetch("http://localhost:9000/users/" + curUserID)
+      fetch("http://localhost:9000/users/info/" + curUserID)
       .then((res) => res.json())
       .then((data) => setCurrUserData(data.result))
     }
+  }
+  //need to change this function to retrieve each product under currUserData
+  useEffect(() => {
+    getData(); 
   }, [])
   console.log(currProductData)
 
@@ -75,6 +70,7 @@ function SellerDashboard() {
     };
 
     submitProduct(obj);
+    alert("Product posted!")
   };
   const submitProduct = (post) => {
     var postID;
@@ -85,8 +81,11 @@ function SellerDashboard() {
     })
   };
 
+  if(currUserData && currProductData) {
   return (
-    <>
+    <div style={{display: "flex", justifyContent: "space-evenly"}}>
+    <div style={{margin: 25, minWidth: 450, borderRightWidth: 2, borderRightStyle: "dashed", paddingRight: 50}}>
+      <h1>Post New Listing</h1>
     {/* Displays the IDs here, uncomment this*/}
     {/* {currProductData.length > 0 &&
           currProductData.map((val, key) => {
@@ -134,8 +133,50 @@ function SellerDashboard() {
           Submit
         </Button>
     </Form>
-    </>
+    </div>
+    <div style={{margin: 25, minWidth: 450}}>
+      <h1>Current Listings</h1>
+      {console.log(currProductData)}
+      {currProductData.map((product) => <ProductListing product={product}/>)}
+    </div>
+    </div>
   );
+        }
+        else {
+          getData(); 
+        }
+}
+
+const ProductListing = (props) => {
+  const product = props.product; 
+  console.log(product); 
+  if(product.image) {
+    return(
+      <div style={{margin: 15, padding: 15, borderWidth: 1, borderRadius: 10, borderStyle: "solid"}}>
+        <h3>{product.name}</h3>
+        <div style={{display: "flex"}}>
+          <img style={{width: 180, height: "auto", margin: 10}} src={product.image} alt={"product image"} />
+          <p>{product.description}</p>
+        </div>
+        <p>Price: ${product.price}</p>
+        <p>Quantity available: {product.numberAvailable}</p>
+        <p>Condition: {product.condition}</p>
+      </div>
+    ); 
+  }
+  else {
+    return(
+      <div style={{margin: 15}}>
+        <h3>{product.name}</h3>
+        <div style={{display: "flex"}}>
+          <p>{product.description}</p>
+        </div>
+        <p>Price: ${product.price}</p>
+        <p>Quantity available: {product.numberAvailable}</p>
+        <p>Condition: {product.condition}</p>
+      </div>
+    ); 
+  }
 }
 
 export default SellerDashboard;

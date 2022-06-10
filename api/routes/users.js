@@ -22,7 +22,7 @@ router.get('/info', async (req, res, next) => {
 router.get("/info/:id", async (req,res,next) => {
   console.log(req.params)
   getDoc(doc(db, "users", req.params.id))
-  .then((doc) => {res.send(doc.data())})
+  .then((doc) => {res.json({result:doc.data()})})
 })
 
 router.put("/addProduct/:userID/:productID", async (req, res, next) => {
