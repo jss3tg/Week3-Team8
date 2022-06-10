@@ -49,6 +49,8 @@ const Prod = () => {
 
 
   return (
+    <div>
+    <h1 className = "title">All Products</h1>
     <div className="container">
       {products.length > 0 &&
         products.map((val, key) => {
@@ -88,6 +90,7 @@ const Prod = () => {
             </>
           );
         })}
+    </div>
     </div>
   );
 };
