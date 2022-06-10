@@ -59,6 +59,7 @@ function SellerDashboard() {
     const pricing = parseFloat(e.target.price.valueAsNumber).toFixed(2)
     const obj = {
       name: e.target.product.value,
+      image: e.target.image.value,
       description: e.target.description.value,
       condition: e.target.condition.value,
       price: parseFloat(pricing),
@@ -95,6 +96,10 @@ function SellerDashboard() {
       <Form.Group className="mb-3">
         <Form.Label>Name Of Product</Form.Label>
         <Form.Control placeholder="Name" name = "product"/>
+      </Form.Group>
+      <Form.Group className="mb-3">
+        <Form.Label>Image URL</Form.Label>
+        <Form.Control placeholder="Image Link" name = "image"/>
       </Form.Group>
       <Form.Group className="mb-3">
         <Form.Label>Description</Form.Label>
