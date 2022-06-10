@@ -10,9 +10,6 @@ import Login from "./components/Login.js"
 import UserIDProvider from './UserIDContext';
 
 function App() {
-  useEffect(() => {
-      fetch("http://localhost:9000/cart/" + "ylM1X1JG3fLvEfKFH2dW").then((res) => res.json()).then((text) => console.log(text))
-  }, [])
   const FontLink = () => {
     return(
       <div className = 'header1'>
